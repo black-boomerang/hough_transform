@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 
-# @jit(nopython=True)
+@jit(nopython=True)
 def recursive_hough(image, left, right, memory_obj):
     '''
     :param image: исходное серое изображение с 1 каналом

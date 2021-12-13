@@ -73,7 +73,7 @@ def measure_time_and_memory():
 
 
 if __name__ == '__main__':
-    # transform_all_images()
-    thread = threading.Thread(target=measure_time_and_memory)
-    thread.start()
-    thread.join()
+    transform_all_images()
+    # thread = threading.Thread(target=measure_time_and_memory)
+    # thread.start()
+    # thread.join()
