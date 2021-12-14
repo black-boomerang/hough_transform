@@ -1,5 +1,4 @@
 import os
-import threading
 
 import cv2
 import matplotlib.pyplot as plt
@@ -24,9 +23,11 @@ def transform_all_images():
         original_image = cv2.imread(os.path.join('images', f'{i}.jpg'), cv2.IMREAD_COLOR)
         center = (int(width / 2), int(height / 2))
         rotation_matrix = cv2.getRotationMatrix2D(center, -angle, 1)
-        transformed_image = cv2.warpAffine(original_image, rotation_matrix, (width, height), flags=cv2.INTER_LINEAR)
+        transformed_image = cv2.warpAffine(original_image, rotation_matrix, (width, height),
+                                           borderMode=cv2.INTER_LINEAR)
         cv2.imwrite(os.path.join('transformed_images', f'{i}_bilinear.jpg'), transformed_image)
-        transformed_image_2 = cv2.warpAffine(original_image, rotation_matrix, (width, height), flags=cv2.INTER_NEAREST)
+        transformed_image_2 = cv2.warpAffine(original_image, rotation_matrix, (width, height),
+                                             borderMode=cv2.INTER_NEAREST)
         cv2.imwrite(os.path.join('transformed_images', f'{i}_nearest.jpg'), transformed_image_2)
 
 
@@ -54,10 +55,10 @@ def measure_time_and_memory():
     plt.show()
 
     plt.figure(figsize=(12, 7))
-    plt.plot(sizes, time_algo)
+    plt.plot(sizes, time_algo * sizes ** 2 / 1e9)
     plt.title('Зависимость времени работы алгоритмов от длины/ширины')
     plt.xlabel('N')
-    plt.ylabel('Время работы (мсек/мегапиксель)')
+    plt.ylabel('Время работы')
     plt.grid()
     plt.savefig('time_from_N.png')
     plt.show()
